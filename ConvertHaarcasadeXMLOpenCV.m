@@ -13,7 +13,6 @@ function ConvertHaarcasadeXMLOpenCV(filename)
 %     ConvertHaarcasadeXMLOpenCV(filename(1:end-4)); 
 %  end
 %
-% Function is written by D.Kroon University of Twente (November 2010)
 
 j=find(filename=='.'); if(~isempty(j)), filename=filename(1:j-1); end
 

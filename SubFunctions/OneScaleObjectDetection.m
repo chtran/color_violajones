@@ -1,23 +1,23 @@
-function [x,y]=OneScaleObjectDetection( x, y, Scale, IntegralImages, w,h,HaarCasade)
-% [x,y]=OneScaleObjectDetection( x, y, Scale, IntegralImages, w,h,HaarCasade)
+function [x,y]=OneScaleObjectDetection( x, y, Scale, IntegralImages, w,h,Haarcascade)
+% [x,y]=OneScaleObjectDetection( x, y, Scale, IntegralImages, w,h,Haarcascade)
 %
 
 % Calculate the mean 
 InverseArea = 1 / (w*h);
 mean =  GetSumRect(IntegralImages.ii,x,y,w,h)*InverseArea;
 % Use the mean and squared integral image to calculate the grey-level
-% Varianceiance, of every search window
+% Variance of every search window
 Variance = GetSumRect(IntegralImages.ii2,x,y,w,h)*InverseArea - (mean.^2);
-% Convert the Varianceiation to Standard Deviation
+% Convert the Variance to Standard Deviation
 Variance(Variance<1)=1; StandardDeviation =sqrt(Variance);
 
-% The haarcasade contains a row of classifier-trees. The classifiers
+% The haarcascade contains a row of classifier-trees. The classifiers
 % are executed one at the time. If a coordinate doesn't pass the classifier
 % threshold it is removed, otherwise it goes into the next classifier
 
 % Loop through all classifier stages
-for i_stage = 1:length(HaarCasade.stages),
-    stage = HaarCasade.stages(i_stage);
+for i_stage = 1:length(Haarcascade.stages),
+    stage = Haarcascade.stages(i_stage);
     Trees=stage.trees;
     StageSum = zeros(size(x));
     
