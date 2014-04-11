@@ -1,4 +1,4 @@
-function responses = compute_response(x, y, w, h, filter, integral_images)
+function responses = compute_response(x, y, scale, filter, integral_images)
 % filter is a mx6 matrix where each row defines a rectangle
 % column 1 is the top left x value
 % column 2 is the top left y value
@@ -11,8 +11,6 @@ function responses = compute_response(x, y, w, h, filter, integral_images)
     for wd_id = 1:num_windows
         wd_x = x(wd_id);
         wd_y = y(wd_id);
-        wd_w = w(wd_id);
-        wd_h = h(wd_id);
         
         for ii = 1:size(filter, 1)
             f_x = filter(ii,1);
@@ -22,10 +20,10 @@ function responses = compute_response(x, y, w, h, filter, integral_images)
             weight = filter(ii,5);
             channel = filter(ii,6);
 
-            rect_response = integral_images(f_x+f_w, f_y+f_h, channel) ...
-                + integral_images(f_x, f_y, channel) ...
-                - integral_images(f_x+f_w, f_y, channel) ...
-                - integral_images(f_x, f_y+f_h, channel);
+            rect_response = integral_images(wd_x+scale*(f_x+f_w), wd_y+scale*(f_y+f_h), channel) ...
+                + integral_images(wd_x+scale*f_x, wd_y+scale*f_y, channel) ...
+                - integral_images(wd_x+scale*(f_x+f_w), wd_y+scale*f_y, channel) ...
+                - integral_images(wd_x+scale*f_x, wd_y+scale*(f_y+f_h), channel);
             rect_response = weight*rect_response;
             responses = responses + rect_response;
         end
