@@ -1,2 +1,7 @@
-1. Run demo_response for visualizations of feature map
-2. Run demo_detection for demo of face detection. This script uses the cascade classifier trained by opencv (for grayscale images).
+- Run demo_response for visualizations of feature map
+- Run demo_detection for demo of face detection. This script uses the cascade classifier trained by opencv (for grayscale images).
+
+
+TODO:
+- Right now, I'm using the cascade classifier trained with grayscale images so in TreeObjectDetection, I'm summing the responses over all 3 channels (TreeObjectDetection.m 17:19). For a cascade classifier trained with color image, this step should compute the response to a specific color channel.
+
