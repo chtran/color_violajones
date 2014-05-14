@@ -1,14 +1,13 @@
-function PixelSum=GetSumRect(IntegralImage,x,y,Width,Height)
-%
-% PixelSum=GetSumRect(IntegralImage,x,y,Width,Height)
-%
-IIWidth=size(IntegralImage,1);
-PixelSum  =   IntegralImage((x+Width)*IIWidth + y + Height+1) +  ...
-			  IntegralImage(x*IIWidth+y+1) - ...
-			  IntegralImage((x+Width)*IIWidth+y+1) - ...
-			  IntegralImage(x*IIWidth+y+Height+1);
+function PixelSum=GetSumRect(IntegralImage,x,y,Width,Height,Channel)
 
-
+n = length(x);
+PixelSum = zeros(n,1);
+for ii=1:n
+    PixelSum(ii)  =   IntegralImage(y(ii) + Height(ii)+1,(x(ii)+Width(ii)+1), Channel) +  ...
+                  IntegralImage(y(ii)+1,x(ii)+1,Channel) - ...
+                  IntegralImage(y(ii)+1,x(ii)+Width(ii)+1,Channel) - ...
+                  IntegralImage(y(ii)+Height(ii)+1,x(ii)+1,Channel);
+end
 
             
        

@@ -4,10 +4,17 @@ function [x,y]=OneScaleObjectDetection( x, y, Scale, IntegralImages, w,h,Haarcas
 
 % Calculate the mean 
 InverseArea = 1 / (w*h);
-mean =  GetSumRect(IntegralImages.ii,x,y,w,h)*InverseArea;
+w_vector = repmat(w,length(x),1);
+h_vector = repmat(h,length(x),1);
+mean_r =  GetSumRect(IntegralImages.ii,x,y,w_vector,h_vector,1)*InverseArea;
+mean_g =  GetSumRect(IntegralImages.ii,x,y,w_vector,h_vector,2)*InverseArea;
+mean_b =  GetSumRect(IntegralImages.ii,x,y,w_vector,h_vector,3)*InverseArea;
+
+mean=0.2989*mean_r + 0.5870*mean_g+ 0.1140*mean_b;
+
 % Use the mean and squared integral image to calculate the grey-level
 % Variance of every search window
-Variance = GetSumRect(IntegralImages.ii2,x,y,w,h)*InverseArea - (mean.^2);
+Variance = GetSumRect(IntegralImages.ii2,x,y,w_vector,h_vector,1)*InverseArea - (mean.^2);
 % Convert the Variance to Standard Deviation
 Variance(Variance<1)=1; StandardDeviation =sqrt(Variance);
 

@@ -1,0 +1,2 @@
+1. Run demo_response for visualizations of feature map
+2. Run demo_detection for demo of face detection. This script uses the cascade classifier trained by opencv (for grayscale images).

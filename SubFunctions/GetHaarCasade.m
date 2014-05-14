@@ -7,7 +7,6 @@ function HaarCascade=GetHaarCasade(FilenameHaarcasade)
 % HaarCascade=GetHaarCasade(FilenameHaarcasade);
 %
 %
-% Function is written by D.Kroon University of Twente (November 2010)
 
 
 load(FilenameHaarcasade);

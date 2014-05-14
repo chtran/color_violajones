@@ -11,8 +11,12 @@ for i_Rectangle = 1:3
     RectY = floor(Rectangle(:,2)*Scale+y);
     RectWidth = floor(Rectangle(:,3)*Scale);
     RectHeight = floor(Rectangle(:,4)*Scale);
+
     RectWeight = Rectangle(:,5);
-    r_sum = GetSumRect(IntegralImage,RectX,RectY,RectWidth,RectHeight).*RectWeight;
+    r_sum = zeros(length(RectX),1);
+    for c=1:3
+        r_sum = r_sum + GetSumRect(IntegralImage,RectX,RectY,RectWidth,RectHeight,c).*RectWeight;
+    end
     Rectangle_sum = Rectangle_sum + r_sum;
 end
 Rectangle_sum = Rectangle_sum * InverseAreaa;

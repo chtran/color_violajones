@@ -42,8 +42,9 @@ function Objects = ObjectDetection(Picture,FilenameHaarcasade,Options)
 %   FilenameHaarcasade = 'HaarCascades/haarcascade_frontalface_alt.mat';
 %   Objects=ObjectDetection(I,FilenameHaarcasade);
 %   ShowDetectionResult(I,Objects);
-%
-% Function is written by D.Kroon University of Twente (November 2010)
+
+% Function originally written by D.Kroon University of Twente (November 2010)
+% Modified by Chau Tran to add color-opponent channels (May 2014)
 
 % The default Options
 defaultoptions=struct('ScaleUpdate',1/1.2,'Resize',true,'Verbose',true);

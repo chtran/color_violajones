@@ -1,12 +1,9 @@
 function IntegralImages = GetIntergralImages(Picture,Options)
-% Make integral image from a Picture
+% Make integral image from a color image
 %
 %
-% Function is written by D.Kroon University of Twente (November 2010)
 
 % Convert the Picture to double 
-% (grey-level scaling doesn't influence the result, thus 
-% double instead of im2double can also be used)
 Picture=im2double(Picture);
 
 % Resize the image to decrease the processing-time
@@ -22,16 +19,21 @@ else
 end
 
 % Convert the picture to greyscale (this line is the same as rgb2gray, see help)
-if(size(Picture,3)>1),
-    Picture=0.2989*Picture(:,:,1) + 0.5870*Picture(:,:,2)+ 0.1140*Picture(:,:,3);
-end
 
 % Make the integral image for fast region sum look up
-IntegralImages.ii=cumsum(cumsum(Picture,1),2);
-IntegralImages.ii=padarray(IntegralImages.ii,[1 1], 0, 'pre');
+num_channels = size(Picture, 3);
+height = size(Picture, 1);
+width = size(Picture, 2);
+IntegralImages.ii = zeros(height+1, width+1, num_channels);
+for c = 1:num_channels
+    prepad_ii=cumsum(cumsum(Picture(:,:,c),1),2); %before padding
+    IntegralImages.ii(:,:,c) = padarray(prepad_ii,[1 1], 0, 'pre');
+end
 
 % Make integral image to calculate fast a local standard deviation of the
 % pixel data
+Picture = rgb2gray(Picture);
+
 IntegralImages.ii2=cumsum(cumsum(Picture.^2,1),2);
 IntegralImages.ii2=padarray(IntegralImages.ii2,[1 1], 0, 'pre');
 
